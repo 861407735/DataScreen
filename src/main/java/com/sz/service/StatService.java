@@ -1,10 +1,14 @@
 package com.sz.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sz.common.Dist;
 import com.sz.common.Stat;
+import com.sz.mapper.DistMapper;
 import com.sz.mapper.StatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -15,7 +19,8 @@ import org.springframework.stereotype.Service;
 public class StatService {
     @Autowired
     private StatMapper statMapper;
-
+    @Autowired
+    private DistMapper distMapper;  //dist分类 mapper
 
     /**
      * 通用方法 所有的stat接口都可以调用
@@ -59,5 +64,18 @@ public class StatService {
                 .eq("sub_name_en",en).or()
                 .eq("sub_name_zh",zh).orderByDesc("gmt_create").last("limit 1");
         return statMapper.selectOne(wrapper);
+    }
+
+    /**
+     * 通过类型id 获取相应类型授权字数
+     * @param typeId
+     * @return
+     */
+    public Stat getAuthorizationNumber(Integer typeId){
+
+        QueryWrapper<Stat> wrapper = new QueryWrapper<>();
+        wrapper.eq("sub_id",typeId)
+                .orderByDesc("gmt_create").last("limit 1");
+        return  statMapper.selectOne(wrapper);
     }
 }

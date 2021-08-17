@@ -1,5 +1,6 @@
 package com.sz.controller;
 
+import com.sz.common.Dist;
 import com.sz.common.Stat;
 import com.sz.result.Msg;
 import com.sz.result.Result;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -558,7 +560,7 @@ public class StatController {
         }
     }
     /**
-     * 获取数据授权数
+     * 获取数据授权数  需要传入参数 typeId ：31公安授权数  32政务授权数  33政法授权数  34长三角授权数  35互联网授权数
      * @param id id查询 or 英文名 or中文名
      * @param en
      * @param zh
@@ -567,14 +569,25 @@ public class StatController {
     @GetMapping("getDataAuthorizationNumber")
     public Msg getDataAuthorizationNumber(@RequestParam(required = false,defaultValue = "28") Integer id,
                              @RequestParam(required = false,defaultValue = "data_authorization_times")String en,
-                             @RequestParam(required = false,defaultValue = "授权次数")String zh){
+                             @RequestParam(required = false,defaultValue = "授权次数")String zh,
+                                          @RequestParam()Integer typeId){
 
-        Stat stat = statService.common(id, en, zh);
+        Stat stat = statService.getAuthorizationNumber(typeId);
         if (null != stat) {
             return Msg.success().add("result_value",stat.getResultValue());
         }else {
             return Msg.fail();
         }
+//        if (result == null && result.size()==0) {
+//            return Msg.fail();
+//
+//        }else {
+//            long num=0;
+//            for (Dist dist : result) {
+//                num+=dist.getAuthorizationNumber();
+//            }
+//            return Msg.success().add("result_value",num);
+//        }
     }
 
     /**
