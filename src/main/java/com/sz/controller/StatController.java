@@ -498,16 +498,16 @@ public class StatController {
     }
 
     /**
-     * 获取MaxCompute工作流数量
+     * 获取MaxCompute工作流数量  改为总计算资源数
      * @param id id查询 or 英文名 or中文名
      * @param en
      * @param zh
      * @return
      */
-    @GetMapping("getMaxComputeWorkNumber")
-    public Msg getMaxComputeWorkNumber(@RequestParam(required = false,defaultValue = "25") Integer id,
-                                         @RequestParam(required = false,defaultValue = "maxcompute_work_number")String en,
-                                         @RequestParam(required = false,defaultValue = "MaxCompute工作流数量")String zh){
+    @GetMapping("getMaxComputeComputingResources")
+    public Msg getMaxComputeComputingResources(@RequestParam(required = false,defaultValue = "25") Integer id,
+                                         @RequestParam(required = false,defaultValue = "maxcompute_computing_resources")String en,
+                                         @RequestParam(required = false,defaultValue = "MaxCompute总计算资源数")String zh){
 
         Stat stat = statService.common(id, en, zh);
         if (null != stat) {
@@ -517,16 +517,16 @@ public class StatController {
         }
     }
     /**
-     * 获取MaxCompute总运行次数
+     * 获取MaxCompute总运行次数  改为总存储容量
      * @param id id查询 or 英文名 or中文名
      * @param en
      * @param zh
      * @return
      */
-    @GetMapping("getMaxComputeNumber")
-    public Msg getMaxComputeNumber(@RequestParam(required = false,defaultValue = "26") Integer id,
-                                       @RequestParam(required = false,defaultValue = "maxcompute_totalruns")String en,
-                                       @RequestParam(required = false,defaultValue = "MaxCompute总运行次数")String zh){
+    @GetMapping("getMaxComputeStorageCapacity")
+    public Msg getMaxComputeStorageCapacity(@RequestParam(required = false,defaultValue = "26") Integer id,
+                                       @RequestParam(required = false,defaultValue = "maxcompute_storage_capacity")String en,
+                                       @RequestParam(required = false,defaultValue = "MaxCompute总存储容量")String zh){
 
         Stat stat = statService.common(id, en, zh);
         if (null != stat) {
@@ -537,22 +537,22 @@ public class StatController {
     }
 
     /**
-     * 获取MaxCompute资源
+     * 获取MaxCompute资源  改为 计算资源平均使用率
      * @param id id查询 or 英文名 or中文名
      * @param en
      * @param zh
      * @return
      */
-    @GetMapping("getMaxCompute")
-    public Msg getMaxCompute(@RequestParam(required = false,defaultValue = "27") Integer id,
-                                   @RequestParam(required = false,defaultValue = "maxcompute_source_number")String en,
-                                   @RequestParam(required = false,defaultValue = "MaxCompute资源")String zh){
+    @GetMapping("getMaxComputeAverageUsageOfComputingResources")
+    public Msg getMaxComputeAverageUsageOfComputingResources(@RequestParam(required = false,defaultValue = "27") Integer id,
+                                   @RequestParam(required = false,defaultValue = "maxcompute_average_usage_of_computing_resources")String en,
+                                   @RequestParam(required = false,defaultValue = "MaxCompute计算资源平均使用率")String zh){
 
         Stat stat = statService.common(id, en, zh);
         if (null != stat) {
-            double result= stat.getResultValue()/NUMBER;
+            long result= stat.getResultValue();
 
-            return Msg.success().add("result_value",String.format("%.3f", result));
+            return Msg.success().add("result_value",result);
         }else {
             return Msg.fail();
         }
@@ -572,6 +572,27 @@ public class StatController {
         Stat stat = statService.common(id, en, zh);
         if (null != stat) {
             return Msg.success().add("result_value",stat.getResultValue());
+        }else {
+            return Msg.fail();
+        }
+    }
+
+    /**
+     * 获取MaxCompute存储使用率
+     * @param id id查询 or 英文名 or中文名
+     * @param en
+     * @param zh
+     * @return
+     */
+    @GetMapping("getMaxComputeStorageUsage")
+    public Msg getMaxComputeStorageUsage(@RequestParam(required = false,defaultValue = "29") Integer id,
+                                          @RequestParam(required = false,defaultValue = "maxcompute_storage_usage")String en,
+                                          @RequestParam(required = false,defaultValue = "MaxCompute存储使用率")String zh){
+
+        Stat stat = statService.common(id, en, zh);
+        if (null != stat) {
+           long result=stat.getResultValue();
+            return Msg.success().add("result_value",result);
         }else {
             return Msg.fail();
         }
