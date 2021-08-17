@@ -1,6 +1,9 @@
 package com.sz.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sz.common.Detail;
+import com.sz.common.Run;
 import com.sz.mapper.DetailMapper;
 import com.sz.mapper.RunMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class CompService {
     }
 
     public List getComponentSrviceOeration(){
-        return runMapper.selectList(null);
+        QueryWrapper<Run> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("comp_call").last("limit 6");
+        return runMapper.selectList(wrapper);
     }
 }
