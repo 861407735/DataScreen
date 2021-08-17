@@ -1,0 +1,27 @@
+
+# 数据库配置信息
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-bp1h9b0n85es6j62bpo.mysql.rds.aliyuncs.com:3306/db_zz_view?useUnicode=true&useSSL=false&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false&useLegacyDatetimeCode=false&serverTimezone=Hongkong&nullCatalogMeansCurrent=true
+    username: zz_view
+    password: dtd@0209
+    # 返回json数据时间格式化全局
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: Asia/Shanghai
+#   开发
+#  profiles:
+#    active: dev
+
+# mybatis-plus 配置信息
+#驼峰设置
+mybatis-plus.configuration.map-underscore-to-camel-case: true
+#mybatis-plus.configuration.global-config.db-config.id-type: auto
+#mybatis-plus.configuration.global-config.db-config.logic-delete-value: 1
+#mybatis-plus.configuration.global-config.db-config.logic-not-delete-value: 0
+#mybatis-plus.mapper-locations: classpath*:mapper/*.xml
+# 端口号
+server:
+  port: 8080
